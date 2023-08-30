@@ -13,3 +13,8 @@
 	url = /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.anat.smriprep
 	datalad-id = f3ef9683-0a58-4d2b-b4eb-d33d8fc3fd2b
 	datalad-url = "ria+file:///lustre03/project/rrg-pbellec/ria-beluga#~cneuromod.anat.smriprep"
+[submodule "sourcedata/cneuromod.mario3"]
+	path = sourcedata/cneuromod.mario3
+	url = /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.mario3.raw
+	datalad-id = 061941e4-bdb6-4f5a-9f47-cc1b962d1ec6
+	datalad-url = "ria+file:///lustre03/project/rrg-pbellec/ria-beluga#~cneuromod.mario3.raw"
