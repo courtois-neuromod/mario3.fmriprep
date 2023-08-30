@@ -18,7 +18,7 @@ set -e -u -x
 
 export LOCAL_DATASET=$SLURM_TMPDIR/${SLURM_JOB_NAME//-/}/
 export SINGULARITYENV_TEMPLATEFLOW_HOME="${LOCAL_DATASET}/sourcedata/templateflow/"
-flock --verbose /lustre03/project/rrg-pbellec/ria-beluga#8be9d625-89e3-45e0-8650-6dc98853cd24/.datalad_lock datalad clone ria+file:///lustre03/project/rrg-pbellec/ria-beluga#8be9d625-89e3-45e0-8650-6dc98853cd24@dev $LOCAL_DATASET
+flock --verbose /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.mario3.fmriprep/.datalad_lock datalad clone ria+file:///lustre03/project/rrg-pbellec/ria-beluga#~cneuromod.mario3.fmriprep@dev $LOCAL_DATASET
 cd $LOCAL_DATASET
 datalad get -s ria-beluga-storage -J 4 -n -r -R1 . # get sourcedata/* containers
 datalad get -s ria-beluga-storage -J 4 -r sourcedata/templateflow/tpl-{MNI152NLin2009cAsym,OASIS30ANTs,fsLR,fsaverage,MNI152NLin6Asym}
@@ -36,9 +36,9 @@ git submodule foreach  --recursive git-annex enableremote ria-beluga-storage
 datalad containers-run -m 'fMRIPrep_sub-01/ses-014' -n bids-fmriprep --input sourcedata/templateflow/tpl-MNI152NLin2009cAsym/ --input sourcedata/templateflow/tpl-OASIS30ANTs/ --input sourcedata/templateflow/tpl-fsLR/ --input sourcedata/templateflow/tpl-fsaverage/ --input sourcedata/templateflow/tpl-MNI152NLin6Asym/ --output . --input 'sourcedata/cneuromod.mario3/sub-01/ses-014/fmap/' --input 'sourcedata/cneuromod.mario3/sub-01/ses-014/func/' --input 'sourcedata/smriprep/sub-01/anat/' --input sourcedata/smriprep/sourcedata/freesurfer/fsaverage/ --input sourcedata/smriprep/sourcedata/freesurfer/sub-01/ -- -w ./workdir --participant-label 01 --anat-derivatives ./sourcedata/smriprep --fs-subjects-dir ./sourcedata/smriprep/sourcedata/freesurfer --bids-filter-file code/fmriprep_study-cneuromod.mario3_sub-01_ses-014_bids_filters.json --output-layout bids --ignore slicetiming --use-syn-sdc --output-spaces MNI152NLin2009cAsym T1w:res-iso2mm --cifti-output 91k --notrack --write-graph --skip_bids_validation --omp-nthreads 8 --nprocs 12 --mem_mb 49152 --fs-license-file code/freesurfer.license sourcedata/cneuromod.mario3 ./ participant 
 fmriprep_exitcode=$?
 
-flock --verbose /lustre03/project/rrg-pbellec/ria-beluga#8be9d625-89e3-45e0-8650-6dc98853cd24/.datalad_lock datalad push -d ./ --to origin
+flock --verbose /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.mario3.fmriprep/.datalad_lock datalad push -d ./ --to origin
 if [ -d sourcedata/freesurfer ] ; then
-    flock --verbose /lustre03/project/rrg-pbellec/ria-beluga#8be9d625-89e3-45e0-8650-6dc98853cd24/.datalad_lock datalad push -J 4 -d sourcedata/freesurfer --to origin
+    flock --verbose /lustre03/project/rrg-pbellec/ria-beluga/alias/cneuromod.mario3.fmriprep/.datalad_lock datalad push -J 4 -d sourcedata/freesurfer --to origin
 fi 
 if [ -e $LOCAL_DATASET/workdir/fmriprep_wf/resource_monitor.json ] ; then cp $LOCAL_DATASET/workdir/fmriprep_wf/resource_monitor.json /scratch/bpinsard/fmriprep_study-cneuromod.mario3_sub-01_ses-014_resource_monitor.json ; fi 
 if [ $fmriprep_exitcode -ne 0 ] ; then cp -R $LOCAL_DATASET /scratch/bpinsard/fmriprep_study-cneuromod.mario3_sub-01_ses-014 ; fi 
